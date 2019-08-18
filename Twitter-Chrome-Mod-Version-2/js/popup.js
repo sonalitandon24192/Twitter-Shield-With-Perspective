@@ -117,7 +117,7 @@ function addSliders(){
     var toxicSlider = document.createElement('form')
     toxicSlider.id = "toxicForm"
     toxicSlider.innerHTML = '<form style="padding-left:30px; padding-right:30px;" class="sliderForm" >'
-                          + '<p>Maximum percentage of <b>toxic</b> tweets you would like to allow: <span id="toxicThresholdOutput">8%</span></p> '
+                          + '<p>Maximum <b>toxic</b> tweet frequency you would allow : <span id="toxicThresholdOutput">8%</span></p> '
                           + '<input type="range" step="1" min="1" max="100" name ="threshold" class = "slider" value ="8" id="toxicitySlider">'
                           + '</form>'
 
@@ -172,7 +172,7 @@ function addSliders(){
     var misinfoSlider = document.createElement('form')
     misinfoSlider.id = "misinfoForm"
     misinfoSlider.innerHTML = '<form style="padding-left:30px; padding-right:30px;" class="sliderForm" id="misinfoForm">'
-                            + '<p>Maximum percentage of <b>misinformation</b> tweets you would like to allow: <span id="misinfoThresholdOutput">2%</span></p>'
+                            + '<p>Maximum <b>misinfo.</b> tweet frequency you would allow: <span id="misinfoThresholdOutput">2%</span></p>'
                             + '<input type="range" step="1" min="1" max="100" name ="threshold" class = "slider" value ="2" id="misinfoSlider">'
                             + '</form>' 
     
@@ -233,61 +233,5 @@ function removeSliders(){
   document.getElementById('toxicForm').remove()
   document.getElementById('misinfoForm').remove()
   location.reload()
-}
-
-
-
-let sliders, sliderfills, thumbs, slidervalues;
-let initialValue = [38,50,63,88]; //initial values for the sliders
-
-document.addEventListener('DOMContentLoaded', function (e) { init();});
-
-function init(){
-  sliders = document.querySelectorAll(".customrange");
-  sliderfills = document.querySelectorAll(".sliderfill");
-  thumbs = document.querySelectorAll(".sliderthumb");
-  slidervalues = document.querySelectorAll(".slidervalue");
-  /* We need to change slider appearance to respond to both input and change events. */ 
-  
-  for (let i=0;i<sliders.length;i++){
-    sliders[i].addEventListener("input",function(e){updateSlider(i,sliders[i].value);});
-    sliders[i].addEventListener("change",function(e){updateSlider(i,sliders[i].value);});
-    //set initial values for the sliders
-    sliders[i].value = initialValue[i];
-    //update each slider
-    updateSlider(i,sliders[i].value);
-  }
-}
-function updateSlider(fillindex,val){
-  //sets the text display and location for each thumb and the slider fill  
-  let min = Number(sliders[fillindex].getAttribute("min"));
-  let max = Number(sliders[fillindex].getAttribute("max"));
-  let pc = (val/(max-min)) * 100
-  setThumbText(slidervalues[fillindex],val,pc);
-  setThumb(thumbs[fillindex],pc);
-  setSliderFill(sliderfills[fillindex],pc);
-}
-function setThumbText(elem,val,pc){
-  let size = getComputedStyle(elem).getPropertyValue("--thumbsize");
-  let newx = `calc(${pc}% - ${parseInt(size)/2}px)`;
-  elem.style.left = newx;
-  elem.innerHTML = val;
-}
-function setThumb(elem,val){
-  let size = getComputedStyle(elem).getPropertyValue("--thumbsize");
-  let newx = `calc(${val}% - ${parseInt(size)/2}px)`;
-  elem.style.left = newx;
-  let max = 100;
-  let degrees = 360 * (val/max);
-}
-function setSliderFill(elem,val){
-  let fillcolor = getComputedStyle(elem).getPropertyValue("--accentcolor");
-  let alphafillcolor = getComputedStyle(elem).getPropertyValue("--accentcoloralpha");
-  // we create a linear gradient with a color stop based on the slider value
-  let gradient = `linear-gradient(to right, ${fillcolor} 0%, 
-${alphafillcolor} ${val}%, 
-rgba(255,255,255,0.1) ${Number(val) + 1}%, 
-rgba(255,255,255,0)  100%)`;
-  elem.style.backgroundImage = gradient;
 }
 
