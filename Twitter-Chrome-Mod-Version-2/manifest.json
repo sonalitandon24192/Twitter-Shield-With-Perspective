@@ -3,7 +3,7 @@
 
   "name": "Stranger Danger",
   "description": "Improving social signals on Twitter",
-  "version": "3.0",
+  "version": "0.0.1",
   "web_accessible_resources": ["img/icon.png", "js/oauth.min.js"],
   "content_scripts": [
     {
@@ -19,14 +19,11 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "*://*/*", 
     "activeTab",
     "storage",
     "tabs",
     "*://*.twitter.com/*",
-    "*://oauth.io/*",
-    "https://*.herokuapp.com/"
-
+    "*://oauth.io/*"
   ],
 
   "background": {
