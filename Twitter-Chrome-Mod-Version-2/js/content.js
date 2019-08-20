@@ -1307,8 +1307,8 @@ function addToxicityModal(accountFlaggedTweets, screen_name, toxicityScore){
   accountInfo.style = 'display: inline-block; width: 80%; text-align:left;;'
   var percentage = Math.round(parseFloat(toxicityScore)*100)
   console.log(percentage)
-  accountInfo.innerHTML = 'About <b>'+ percentage.toString() + '%</b> of @' + screen_name + "'s" + ' recent tweets are likely to be toxic.<br>'
-  accountInfo.innerHTML += 'Below are the most recent toxic tweets of @' + screen_name + "."
+  accountInfo.innerHTML = 'About <b>'+ percentage.toString() + '%</b> of <b>@' + screen_name + "</b>'s" + ' recent tweets are likely to be toxic.<br>'
+  accountInfo.innerHTML += 'Below are the most recent toxic tweet(s) of <b>@' + screen_name + "</b>."
   accountInfo.innerHTML += '<br><br>'
   accountInfo.innerHTML += ' <div style="font-size:13px;">Here "toxic" is defined as "a rude, disrespectful, or unreasonable comment that is likely to make you leave a discussion" according to <a href="https://www.perspectiveapi.com/#/home" target="_blank">Perspective API</a>.</div>'
   modalContent.append(accountInfo)
@@ -1371,8 +1371,8 @@ function addCredibilityModal(accountUncredibleTweets, screen_name, credScore){
   accountInfo.style = 'display: inline-block; width: 80%; text-align:left;'
 
   var percentage = Math.round(parseFloat(credScore)*100)
-  accountInfo.innerHTML = 'About <b>'+ percentage.toString() + '%</b> of @' + screen_name + "'s" + ' recent tweets contain links that are likely from misinformation-related sources.<br>'
-  accountInfo.innerHTML += 'Below are the most recent misinformation related tweets of @' + screen_name + "."
+  accountInfo.innerHTML = 'About <b>'+ percentage.toString() + '%</b> of  <b>@' + screen_name + "</b>'s" + ' recent tweets contain links that are likely from misinformation-related sources.<br>'
+  accountInfo.innerHTML += 'Below are the most recent misinformation related tweet(s) of <b>@' + screen_name + "</b>."
   accountInfo.innerHTML += '<br><br>'
   accountInfo.innerHTML += " <div style='font-size:13px;''>We determine the sources' credibility using " + '<a href="https://github.com/BigMcLargeHuge/opensources" target="_blank">OpenSources, a "curated resource for assessing online information sources"</a>.</div>'
   modalContent.append(accountInfo)
