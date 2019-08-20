@@ -3,7 +3,7 @@
 
   "name": "Stranger Danger",
   "description": "Improving social signals on Twitter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "web_accessible_resources": ["img/icon.png", "js/oauth.min.js"],
   "content_scripts": [
     {
