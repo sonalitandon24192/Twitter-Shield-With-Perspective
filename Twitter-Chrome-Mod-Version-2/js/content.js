@@ -74,7 +74,7 @@ var notEnoughTweetsBorderStyle = '';
 
 var toxicityStatusDiv = '';
 
-var TWEET_TOXIC_BOUNDARY = 0.8
+var TWEET_TOXIC_BOUNDARY = 0.9
 
 var TOXIC_BOUNDARY;
 var CRED_BOUNDARY;
@@ -412,8 +412,8 @@ function getProfileScore(username, callback) {
     console.log('get_score')
     oauth_token = localStorage.getItem('oauth_token')
     oauth_token_secret = localStorage.getItem('oauth_token_secret')
-    var url = URL_HEADER + "/toxicityscore?user=" + username + '&threshold=' + threshold + '&oauth_token=' + oauth_token + '&oauth_token_secret=' + oauth_token_secret
-
+    var url = URL_HEADER + "/toxicity_score_higher_threshold?user=" + username + '&threshold=' + threshold + '&oauth_token=' + oauth_token + '&oauth_token_secret=' + oauth_token_secret
+    
     var request = new XMLHttpRequest();
     request.onreadystatechange = function(){
         if (request.readyState == 4 && request.status == 200){
@@ -441,8 +441,9 @@ function getTimelineScores(username, callback, callback_input) {
       // var url = URL_HEADER + "/toxicityscore?user=" + username + '&threshold=' + threshold;
       oauth_token = localStorage.getItem('oauth_token')
       oauth_token_secret = localStorage.getItem('oauth_token_secret')
-      var url = URL_HEADER + "/toxicityscore?user=" + username + '&threshold=' + threshold + '&oauth_token=' + oauth_token + '&oauth_token_secret=' + oauth_token_secret
-
+      
+      var url = URL_HEADER + "/toxicity_score_higher_threshold?user=" + username + '&threshold=' + threshold + '&oauth_token=' + oauth_token + '&oauth_token_secret=' + oauth_token_secret
+      
       var request = new XMLHttpRequest();
       request.onreadystatechange = function(){
           if (request.readyState == 4 && request.status == 200){
@@ -959,7 +960,10 @@ function getNotificationScores(username, callback, callback_input) {
 
       oauth_token = localStorage.getItem('oauth_token')
       oauth_token_secret = localStorage.getItem('oauth_token_secret')
-      var url = URL_HEADER + "/toxicityscore?user=" + username + '&threshold=' + threshold + '&oauth_token=' + oauth_token + '&oauth_token_secret=' + oauth_token_secret
+      // var url = URL_HEADER + "/toxicityscore?user=" + username + '&threshold=' + threshold + '&oauth_token=' + oauth_token + '&oauth_token_secret=' + oauth_token_secret
+      
+      var url = URL_HEADER + "/toxicity_score_higher_threshold?user=" + username + '&threshold=' + threshold + '&oauth_token=' + oauth_token + '&oauth_token_secret=' + oauth_token_secret
+      
       var request = new XMLHttpRequest();
       request.onreadystatechange = function(){
           if (request.readyState == 4 && request.status == 200){
