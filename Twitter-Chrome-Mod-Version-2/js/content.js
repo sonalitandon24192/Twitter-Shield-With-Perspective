@@ -74,7 +74,7 @@ var notEnoughTweetsBorderStyle = '';
 
 var toxicityStatusDiv = '';
 
-var TWEET_TOXIC_BOUNDARY = 0.9
+// var TWEET_TOXIC_BOUNDARY = 0.8
 
 var TOXIC_BOUNDARY;
 var CRED_BOUNDARY;
@@ -421,6 +421,7 @@ function getProfileScore(username, callback) {
             callback(request.responseText); // Another callback here
         }
     };
+    console.log(url)
     request.open('GET', url);
     request.send();
 
@@ -467,7 +468,9 @@ function pollStatusNewTwitter(response){
   var task_id = response_json['task_id']
   var screen_name = response_json['screen_name']
   var threshold = response_json['threshold']
-  var url = URL_HEADER + "/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  // var url = URL_HEADER + "/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  var url = URL_HEADER + "/poll_with_higher_threshold?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  
   // var url = "http://twitter-shield.si.umich.edu/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
   var request = new XMLHttpRequest();
 
@@ -560,18 +563,20 @@ function changeBioAfterRequest(response, screen_name){
 }
 
 function getFlaggedTweets(response_json, screen_name){
+  console.log("GET FLAGGED TWEETS!!!!")
+  console.log(response_json)
   var accountFlaggedTweets = []
   // if(response_json['result']!=null){
     if(response_json['result']!='FAILURE' && response_json['result']!= 'No tweets'){
       if('toxicity' in response_json['result'] && 'tweets_with_scores' in response_json['result']['toxicity']){
         var thisUserTweets = response_json['result']['toxicity']['tweets_with_scores']
       // console.log(thisUserTweets)
+      console.log(thisUserTweets)
+      console.log(thisUserTweets.length)
 
         for(i=0; i<thisUserTweets.length; i++){
-          if(parseFloat(thisUserTweets[i]['tweet_scores']['TOXICITY']) > TWEET_TOXIC_BOUNDARY){
-            accountFlaggedTweets.push(thisUserTweets[i]['tweet_text'])
+            accountFlaggedTweets.push([thisUserTweets[i]['tweet_text'], thisUserTweets[i]['tweet_created_at']])
             console.log(thisUserTweets[i]['tweet_text'])
-          }
         }
       }
     }
@@ -592,7 +597,7 @@ function getCredFlaggedTweets(response_json, screen_name){
         if(parseFloat(thisUserTweets[i]['uncrediblity']) > 0){
           console.log(thisUserTweets[i])
           console.log(thisUserTweets[i]['urls'])
-          accountCredFlaggedTweets.push([thisUserTweets[i]['tweet_text'], thisUserTweets[i]['urls']])
+          accountCredFlaggedTweets.push([thisUserTweets[i]['tweet_text'], thisUserTweets[i]['urls'], thisUserTweets[i]['tweet_created_at']])
           console.log(thisUserTweets[i]['tweet_text'])
         }
       }
@@ -910,7 +915,9 @@ function pollInTimeline(response, domelement){
   var screen_name = response_json['screen_name']
   var threshold = response_json['threshold']
  
-  var url = URL_HEADER + "/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  // var url = URL_HEADER + "/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  var url = URL_HEADER + "/poll_with_higher_threshold?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  
   // var url = "http://twitter-shield.si.umich.edu/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
   var request = new XMLHttpRequest();
 
@@ -984,7 +991,9 @@ function pollInNotification(response, domelement){
   var screen_name = response_json['screen_name']
   var threshold = response_json['threshold']
  
-  var url = URL_HEADER + "/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  // var url = URL_HEADER + "/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  var url = URL_HEADER + "/poll_with_higher_threshold?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
+  
   // var url = "http://twitter-shield.si.umich.edu/poll_status?task_id=" + task_id + '&screen_name=' + screen_name + '&threshold=' + threshold
   var request = new XMLHttpRequest();
 
@@ -1311,10 +1320,10 @@ function addToxicityModal(accountFlaggedTweets, screen_name, toxicityScore){
   accountInfo.style = 'display: inline-block; width: 80%; text-align:left;;'
   var percentage = Math.round(parseFloat(toxicityScore)*100)
   console.log(percentage)
-  accountInfo.innerHTML = 'About <b>'+ percentage.toString() + '%</b> of <b>@' + screen_name + "</b>'s" + ' recent tweets are likely to be toxic.<br>'
-  accountInfo.innerHTML += 'Below are the most recent toxic tweet(s) of <b>@' + screen_name + "</b>."
+  accountInfo.innerHTML = 'About <span style="color: #4769ec"><b>'+ percentage.toString() + '%</b></span> of <b>@' + screen_name + "</b>'s" + ' recent tweets are likely to be toxic.<br>'
+  accountInfo.innerHTML += 'Below we show <span style="color: #4769ec"><b>up to 5</b></span> toxic tweet(s) of <b>@' + screen_name + "</b> as examples."
   accountInfo.innerHTML += '<br><br>'
-  accountInfo.innerHTML += ' <div style="font-size:13px;">Here "toxic" is defined as "a rude, disrespectful, or unreasonable comment that is likely to make you leave a discussion" according to <a href="https://www.perspectiveapi.com/#/home" target="_blank">Perspective API</a>.</div>'
+  accountInfo.innerHTML += ' <div style="font-size:15px;">This does <b>not necessarily guarantee</b> that this account is toxic.<br>We acknowledge that your definition of "toxic" might be different.<br>Here a "toxic tweet" is defined as "a rude, disrespectful, or unreasonable comment that is likely to make you leave a discussion" according to <a href="https://www.perspectiveapi.com/#/home" target="_blank">Perspective API</a>.</div>'
   modalContent.append(accountInfo)
 
   document.getElementsByTagName('body')[0].appendChild(modal)
@@ -1326,7 +1335,7 @@ function addToxicityModal(accountFlaggedTweets, screen_name, toxicityScore){
   for(i=0; i<accountFlaggedTweets.length; i++){
     var cell = document.createElement('div')
     cell.classList.add('modal-cell')
-    cell.innerText += accountFlaggedTweets[i] + '\n'
+    cell.innerHTML += accountFlaggedTweets[i][0] + '<br><small>' + accountFlaggedTweets[i][1].split(' ')[0] + '</small>'
     modalContent.append(cell)
   }
   // When the user clicks the button, open the modal 
@@ -1375,10 +1384,11 @@ function addCredibilityModal(accountUncredibleTweets, screen_name, credScore){
   accountInfo.style = 'display: inline-block; width: 80%; text-align:left;'
 
   var percentage = Math.round(parseFloat(credScore)*100)
-  accountInfo.innerHTML = 'About <b>'+ percentage.toString() + '%</b> of  <b>@' + screen_name + "</b>'s" + ' recent tweets contain links that are likely from misinformation-related sources.<br>'
+  accountInfo.innerHTML = 'About <span style="color: #4769ec"><b>'+ percentage.toString() + '%</b></span> of  <b>@' + screen_name + "</b>'s" + ' recent tweets contain links that are likely from misinformation-related sources.<br>'
   accountInfo.innerHTML += 'Below are the most recent misinformation related tweet(s) of <b>@' + screen_name + "</b>."
   accountInfo.innerHTML += '<br><br>'
-  accountInfo.innerHTML += " <div style='font-size:13px;''>We determine the sources' credibility using " + '<a href="https://github.com/BigMcLargeHuge/opensources" target="_blank">OpenSources, a "curated resource for assessing online information sources"</a>.</div>'
+  accountInfo.innerHTML += '<div style="font-size:15px;">This does <b>not necessarily guarantee</b> that this account spreads misinformation.</div>'
+  accountInfo.innerHTML += " <div style='font-size:15px;''>We determine the sources' credibility using " + '<a href="https://github.com/BigMcLargeHuge/opensources" target="_blank">OpenSources, a "curated resource for assessing online information sources"</a>.</div>'
   modalContent.append(accountInfo)
 
   document.getElementsByTagName('body')[0].appendChild(modal)
@@ -1391,10 +1401,12 @@ function addCredibilityModal(accountUncredibleTweets, screen_name, credScore){
     var cell = document.createElement('div')
     cell.classList.add('modal-cell')
     cell.innerHTML += accountUncredibleTweets[i][0] + '\n'
+     cell.innerHTML += '<br><small>' + accountUncredibleTweets[i][2].split(' ')[0] + '</small>'
     cell.innerHTML += '<br><br> <b>Misinformation related source(s) in this tweet: <b> <br>'
     for(j=0; j<accountUncredibleTweets[i][1].length; j++){
       cell.innerHTML += '<a href="' + accountUncredibleTweets[i][1][j] + '">' + accountUncredibleTweets[i][1][j] + "</a>"
     }
+   
     
     modalContent.append(cell)
   }
