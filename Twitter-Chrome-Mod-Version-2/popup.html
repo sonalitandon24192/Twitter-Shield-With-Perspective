@@ -5,46 +5,80 @@
  -->
 <html>
   <head>
-    <title>Tweety Holmes</title>
+    <title>Stranger Danger</title>
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
     -->
-    <!-- <script src="popup.js"></script> -->
-    <link rel="stylesheet" href="css/popup.css">
-    <!-- Latest compiled and minified CSS -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <script src="https://cdn.rawgit.com/oauth-io/oauth-js/c5af4519/dist/oauth.js"></script> -->
+    
+    
+
+    <meta http-equiv="Content-Security-Policy" content="default-src *; img-src www.google-analytics.com stats.g.doubleclick.net https://stats.g.doubleclick.net https://stats.g.doubleclick.net https://www.google.com/ads ; style-src 'self' 'unsafe-inline'; connect-src www.google-analytics.com stats.g.doubleclick.net https://stats.g.doubleclick.net https://stats.g.doubleclick.net https://www.google.com/ads; script-src *  https://stats.g.doubleclick.net 'unsafe-inline' 'unsafe-eval'" >
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    
+    <script type="text/javascript" src="js/oauth.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/popup.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
-    <!-- Latest compiled and minified JavaScript -->
+
+    
 
   </head>
 
   <body>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Twitter Profile Identifier</h3>
+    <div class="panel panel-default" id="popupPanel">
+      <!--<div class="panel-heading">-->
+        
+      <!--</div>-->
+        <div class="panel-body" style="margin-left: 15px; margin-right:15px;">
+          
+          <div><b>Stranger Danger</b> 
+            <!-- <img id='icon' style="float:center;" src="img/icon.png"> -->
+          </div>
+
+          Improving social signals on Twitter!
+          <br>
+          
+          <!--Improve our Code! <a href="https://github.com/trusttri/Twitter-Shield-With-Perspective" target="_blank">Github</a>-->
       </div>
-        <div class="panel-body">Improve our Code! <a href="https://github.com/jberman5/Twitter-Chrome-Mod" target="_blank">Github</a>
-      </div>
+
+      
     </div>
 
-    <div>
-      <form onsubmit="setThreshold()">
-        Threshold <input type="number" name ="threshold" value ="0" id="thresholdId"/>
-        <input type="submit" value="Submit" id ="submitId">
-      </form>
+    <div style="" id="contentPanel">
+       <div style="padding-left:15px; padding-right:15px; margin-bottom:15px; margin-left: 15px; margin-right: 15px;" id="statePanel">
+        Your information will be only stored locally.
+        <br>
+      </div>
+      
+      <!-- <form onsubmit="setThreshold()" style="margin:15px"> -->
+      <div style="margin:15px" id="buttonPanel">
+        <!-- Threshold <input type="number" step="0.1" min="0" max="1" name ="threshold" value ="0" id="thresholdId"> -->
+        <!--Threshold <input name ="threshold" value ="0" id="thresholdId"/>-->
+        <!-- <input type="text" value="" name="accountName" id="accountHandle" autofocus> -->
+        
+        <div id ="submitId">Log in with Twitter account</div>
+      </div>
+   
+      
     </div>
+
+
+    
+
   </body>
+  <script type="text/javascript" src="js/popup.js"></script>
 
-      <script type="text/javascript" src="js/popup.js"></script>
 
 <!--   <script>
 

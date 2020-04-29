@@ -2,14 +2,97 @@
 /* Body    #fc5c65 */
 
 body {
-  margin: 20px;
+  /*margin: 20px;*/
   white-space: nowrap;
+  min-width:275px;
 }
 
 h3 {
   color: #FC427B;
 }
 
+#submitId {
+  background-color: #428bca;
+  padding: 2px 10px; 
+  text-align: center; 
+  border-radius: 8px;
+  text-decoration: none; 
+  display: 
+  font-size: 14px;
+  margin-left:15px; margin-right:15px; margin-top:3px; margin-bottom: 3px; 
+  cursor: pointer; color:white;
+}
+
 .panel-heading {
   background-color: #FC427B;
+  /*padding: 40px;*/
+}
+
+#icon {
+	width: 15px;
+	height: 15px;
+}
+
+.sliderForm {
+  padding-left: 30px
+  padding-right: 30px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;   
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+/*
+input[type="range"]{
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0.08, #94A14E),
+        color-stop(0.08, #ea0505a8)
+    );
+}*/
+/*
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background-color: #E9E9E9;
+}
+*/
+#toxicitySlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  border:solid;
+  border-color: black;
+  background: #e22162;
+  cursor: pointer;
+}
+
+#misinfoSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  border:solid;
+  border-color: black;
+  background: rgb(252, 119, 36, 1);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4CAF50;
+  cursor: pointer;
 }
